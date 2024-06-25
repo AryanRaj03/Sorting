@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorting Algorithm Visualizer</title>
+<link rel = "stylesheet" href="styles.css">
+</head>
+
+<body>
+<div class ="heading">
+    <h1>Sorting Algorithm Visualizer</h1>
+</div>
+<div class="container">
+    <div class="input-group">
+        <label for="numbers">Enter numbers (comma-separated):</label>
+        <input type="text" id="numbers" placeholder="e.g., 5, 2, 8, 1, 9">
+    </div>
+    <div class="input-group">
+        <label for="algorithm">Select sorting algorithm:</label>
+        <select id="algorithm">
+            <option value="bubble">Bubble Sort</option>
+            <option value="selection">Selection Sort</option>
+            <option value="insertion">Insertion Sort</option>
+            <option value="heap">Heap Sort</option>
+            <option value="merge">Merge Sort</option>
+            <option value="quick">Quick Sort</option>
+            <option value="counting">Counting Sort</option>
+            <option value="radix">Radix Sort</option>
+            <option value="bucket">Bucket Sort</option>
+        </select>
+    </div>
+    <button onclick="sort()">Sort</button>
+    <div class="output-group">
+        <label for="output">Sorted Output:</label>
+        <textarea id="output" readonly></textarea>
+    </div>
+</div>
+<script src = "script1.js"></script>
+</body>
+</html>
