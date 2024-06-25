@@ -1,0 +1,1 @@
+Welcome to the Sorting Visualizer! This project visualizes various sorting algorithms using HTML, CSS, and JavaScript. It's an educational tool designed to help you understand how different sorting algorithms work.It provides option such as Bubble sort , Selection sort , Heap Sort , etc to chose from. It also validates the input format as per the respective sorting algorithm.
