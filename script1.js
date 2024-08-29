@@ -192,17 +192,21 @@ function quickSort(arr) {
     var pivot = arr[Math.floor(arr.length / 2)];
     var left = [];
     var right = [];
+    var equal = [];
     
     for (var i = 0; i < arr.length; i++) {
         if (arr[i] < pivot) {
             left.push(arr[i]);
         } else if (arr[i] > pivot) {
             right.push(arr[i]);
+        } else {
+            equal.push(arr[i]);
         }
     }
     
-    return quickSort(left).concat([pivot]).concat(quickSort(right));
+    return quickSort(left).concat(equal).concat(quickSort(right));
 }
+
 function countingSort(arr) {
     // Check if the array is empty
     if (arr.length === 0) {
