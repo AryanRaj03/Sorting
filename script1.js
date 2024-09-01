@@ -1,389 +1,366 @@
-function sort() {
-    var numbersInput = document.getElementById('numbers').value.trim();
-    var algorithm = document.getElementById('algorithm').value;
-    
-    var numbersArray = numbersInput.split(',').map(function(item) {
-        return parseFloat(item.trim(), 10);
-    });
-    
-    var sortedArray;
-    var startTime, endTime;
-    
-    switch(algorithm) {
-        case 'bubble':
-            startTime = performance.now();
-            sortedArray = bubbleSort(numbersArray);
-            endTime = performance.now();
-            break;
-        case 'selection':
-            startTime = performance.now();
-            sortedArray = selectionSort(numbersArray);
-            endTime = performance.now();
-            break;
-        case 'insertion':
-            startTime = performance.now();
-            sortedArray = insertionSort(numbersArray);
-            endTime = performance.now();
-            break;
-        case 'heap':
-            startTime = performance.now();
-            sortedArray = heapSort(numbersArray);
-            endTime = performance.now();
-            break;
-        case 'merge':
-            startTime = performance.now();
-            sortedArray = mergeSort(numbersArray);
-            endTime = performance.now();
-            break;
-        case 'quick':
-            startTime = performance.now();
-            sortedArray = quickSort(numbersArray);
-            endTime = performance.now();
-            break;
-        case 'counting':
-            startTime = performance.now();
-            sortedArray = countingSort(numbersArray);
-            endTime = performance.now();
-            break;
-        case 'radix':
-            startTime = performance.now();
-            sortedArray = radixSort(numbersArray);
-            endTime = performance.now();
-        case 'bucket':
-            startTime = performance.now();
-            sortedArray = bucketSort(numbersArray);
-            endTime = performance.now();
-        default:
-            break;
+
+
+const arrayContainer = document.getElementById('array-container');
+let array = [];
+function generateArray() {
+    array = [];
+    arrayContainer.innerHTML = '';
+    for (let i = 0; i < 30; i++) {
+        const value = Math.floor(Math.random() * 100) + 1;
+        array.push(value);
+        const bar = document.createElement('div');
+        bar.classList.add('bar');
+        bar.style.height = `${value * 3}px`;
+        const number = document.createElement('span');
+        number.className = 'bar-value';
+        number.innerText = value;
+
+        bar.appendChild(number);
+        arrayContainer.appendChild(bar);
+    }
+}
+
+let speed = 50; 
+
+function updateSpeed(value) {
+    speed = 201-value; 
+    document.getElementById('speed-value').textContent = value;
+}
+async function bubbleSort() {
+    const bars = document.querySelectorAll('.bar');
+    for (let i = 0; i < array.length - 1; i++) {
+        for (let j = 0; j < array.length - i - 1; j++) {
+            if (array[j] > array[j + 1]) {
+                [array[j], array[j + 1]] = [array[j + 1], array[j]];
+                bars[j].style.height = `${array[j] * 3}px`;
+                bars[j + 1].style.height = `${array[j + 1] * 3}px`;
+                bars[j].querySelector('.bar-value').innerText = array[j];
+                bars[j + 1].querySelector('.bar-value').innerText = array[j + 1];
+                bars[j].style.backgroundColor = '#F95738';
+                bars[j + 1].style.backgroundColor = '#F95738';
+                await new Promise((resolve) => setTimeout(resolve, speed));
+                bars[j].style.backgroundColor = '#0D3B66';
+                bars[j + 1].style.backgroundColor = '#0D3B66';
+            }
+        }
+       
+    }
+    for (let i = 0; i < bars.length; i++) {
+        bars[i].style.backgroundColor = 'green';
+    }
+}
+
+
+async function selectionSort() {
+    const bars = document.querySelectorAll('.bar');
+    for (let i = 0; i < array.length - 1; i++) {
+        let minIdx = i;
+        for (let j = i + 1; j < array.length; j++) {
+            if (array[j] < array[minIdx]) {
+                minIdx = j;
+            }
+        }
+        if (minIdx !== i) {
+            [array[i], array[minIdx]] = [array[minIdx], array[i]];
+            bars[i].style.height = `${array[i] * 3}px`;
+            bars[minIdx].style.height = `${array[minIdx] * 3}px`;
+            bars[i].querySelector('.bar-value').innerText = array[i];
+            bars[minIdx].querySelector('.bar-value').innerText = array[minIdx];
+            bars[i].style.backgroundColor = '#F95738';
+            bars[minIdx].style.backgroundColor = '#F95738'
+            await new Promise((resolve) => setTimeout(resolve, speed));
+            bars[i].style.backgroundColor = '#0D3B66';
+            bars[minIdx].style.backgroundColor = '#0D3B66';
+        }
+
+    }
+    for (let i = 0; i < bars.length; i++) {
+        bars[i].style.backgroundColor = 'green';
+    }
+}
+
+async function insertionSort() {
+    const bars = document.querySelectorAll('.bar');
+    for (let i = 1; i < array.length; i++) {
+        let key = array[i];
+        let j = i - 1;
+        while (j >= 0 && array[j] > key) {
+            array[j + 1] = array[j];
+            bars[j + 1].style.height = `${array[j + 1] * 3}px`;
+            bars[j + 1].querySelector('.bar-value').innerText = array[j+1];
+            bars[j + 1].style.backgroundColor = '#F95738';
+            await new Promise((resolve) => setTimeout(resolve,speed));
+            bars[j + 1].style.backgroundColor = '#0D3B66';
+            j--;
+        }
+        array[j + 1] = key;
+        bars[j + 1].style.height = `${array[j + 1] * 3}px`;
+        bars[j + 1].querySelector('.bar-value').innerText = array[j+1];
+       
+    }
+    for (let i = 0; i < bars.length; i++) {
+        bars[i].style.backgroundColor = 'green';
+    }
+}
+
+
+// script.js
+
+async function mergeSort(arr, l, r) {
+    if (l >= r) {
+        return;
+    }
+    const m = l + Math.floor((r - l) / 2);
+     await mergeSort(arr, l, m);
+    await mergeSort(arr, m + 1, r);
+    await merge(arr, l, m, r);
+    if (l === 0 && r === arr.length - 1) {
+        // Turn all bars green after sorting is done
+        await turnBarsGreen();
     }
     
-    // var outputTextArea = document.getElementById('output');
-    // outputTextArea.value = sortedArray.join(', ') + '\n\nTime Complexity: ' + (endTime - startTime) + ' milliseconds';
-    var outputTextArea = document.getElementById('output');
-if (Array.isArray(sortedArray)) {
-    outputTextArea.value = sortedArray.join(', ') + '\n\nTime Complexity: ' + (endTime - startTime) + ' milliseconds';
-} else {
-    outputTextArea.value = sortedArray + '\n\nTime Complexity: N/A';
 }
 
+async function merge(arr, l, m, r) {
+    const n1 = m - l + 1;
+    const n2 = r - m;
+    const left = arr.slice(l, m + 1);
+    const right = arr.slice(m + 1, r + 1);
+
+    let i = 0, j = 0, k = l;
+    const bars = document.querySelectorAll('.bar');
+
+    while (i < n1 && j < n2) {
+        if (left[i] <= right[j]) {
+            arr[k] = left[i];
+            bars[k].style.height = `${left[i] * 3}px`;
+            bars[k].querySelector('.bar-value').innerText = arr[k];
+            i++;
+        } else {
+            arr[k] = right[j];
+            bars[k].style.height = `${right[j] * 3}px`;
+            bars[k].querySelector('.bar-value').innerText = arr[k];
+            j++;
+        }
+        bars[k].style.backgroundColor = '#F95738';
+        await new Promise((resolve) => setTimeout(resolve, speed));
+        bars[k].style.backgroundColor = '#0D3B66';
+        k++;
+    }
+
+    while (i < n1) {
+        arr[k] = left[i];
+        bars[k].style.height = `${left[i] * 3}px`;
+        bars[k].querySelector('.bar-value').innerText = arr[k];
+        bars[k].style.backgroundColor = '#F95738';
+        await new Promise((resolve) => setTimeout(resolve, speed));
+        bars[k].style.backgroundColor = '#0D3B66';
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        arr[k] = right[j];
+        bars[k].style.height = `${right[j] * 3}px`;
+        bars[k].querySelector('.bar-value').innerText = arr[k];
+        bars[k].style.backgroundColor ='#F95738';
+        await new Promise((resolve) => setTimeout(resolve, speed));
+        bars[k].style.backgroundColor = '#0D3B66';
+        j++;
+        k++;
+    }
+}
+async function turnBarsGreen() {
+    const bars = document.querySelectorAll('.bar');
+    for (let bar of bars) {
+        bar.style.backgroundColor = 'green';
+        
+    }
+}
+async function quickSort(arr, low, high) {
+    if (low < high) {
+        const pi = await partition(arr, low, high);
+        await quickSort(arr, low, pi - 1);
+        await quickSort(arr, pi + 1, high);
+    }
+    if(low == 0 && high == arr.length-1){
+        await turnBarsGreen();
+    }
 }
 
-function bubbleSort(arr) {
-    var n = arr.length;
-    for (var i = 0; i < n-1; i++) {
-        for (var j = 0; j < n-i-1; j++) {
+async function partition(arr, low, high) {
+    const pivot = arr[high];
+    const bars = document.querySelectorAll('.bar');
+    let i = low - 1;
+
+    for (let j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+
+            bars[i].style.height = `${arr[i] * 3}px`;
+            bars[i].querySelector('.bar-value').innerText = arr[i];
+            bars[j].style.height = `${arr[j] * 3}px`;
+            bars[j].querySelector('.bar-value').innerText = arr[j];
+
+            bars[i].style.backgroundColor = '#F95738';
+            bars[j].style.backgroundColor = '#F95738';
+            await new Promise((resolve) => setTimeout(resolve, speed));
+            bars[i].style.backgroundColor = '#0D3B66';
+            bars[j].style.backgroundColor ='#0D3B66';
+        }
+    }
+    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+
+    bars[i + 1].style.height = `${arr[i + 1] * 3}px`;
+    bars[i + 1].querySelector('.bar-value').innerText = arr[i + 1];
+    bars[high].style.height = `${arr[high] * 3}px`;
+    bars[high].querySelector('.bar-value').innerText = arr[high];
+
+    bars[i + 1].style.backgroundColor = '#F95738';
+    bars[high].style.backgroundColor = '#F95738';
+    await new Promise((resolve) => setTimeout(resolve, speed));
+    bars[i + 1].style.backgroundColor = '#0D3B66';
+    bars[high].style.backgroundColor = '#0D3B66';
+
+    return i + 1;
+}
+
+
+
+const algorithmInfo = {
+    bubbleSort: {
+        best: "O(n)",
+        average: "O(n^2)",
+        worst: "O(n^2)",
+        cppCode: `
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n-1; i++) {
+        for (int j = 0; j < n-i-1; j++) {
             if (arr[j] > arr[j+1]) {
-                // swap arr[j] and arr[j+1]
-                var temp = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = temp;
+                std::swap(arr[j], arr[j+1]);
             }
         }
     }
-    return arr;
-}
-
-function selectionSort(arr) {
-    var n = arr.length;
-    for (var i = 0; i < n-1; i++) {
-        var minIndex = i;
-        for (var j = i+1; j < n; j++) {
-            if (arr[j] < arr[minIndex]) {
-                minIndex = j;
+}`
+    },
+    selectionSort: {
+        best: "O(n^2)",
+        average: "O(n^2)",
+        worst: "O(n^2)",
+        cppCode: `
+void selectionSort(int arr[], int n) {
+    for (int i = 0; i < n-1; i++) {
+        int min_idx = i;
+        for (int j = i+1; j < n; j++) {
+            if (arr[j] < arr[min_idx]) {
+                min_idx = j;
             }
         }
-        // swap arr[minIndex] and arr[i]
-        var temp = arr[minIndex];
-        arr[minIndex] = arr[i];
-        arr[i] = temp;
+        std::swap(arr[i], arr[min_idx]);
     }
-    return arr;
-}
-
-function insertionSort(arr) {
-    var n = arr.length;
-    for (var i = 1; i < n; i++) {
-        var key = arr[i];
-        var j = i - 1;
+}`
+    },
+    insertionSort: {
+        best: "O(n)",
+        average: "O(n^2)",
+        worst: "O(n^2)",
+        cppCode: `
+void insertionSort(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
         while (j >= 0 && arr[j] > key) {
-            arr[j+1] = arr[j];
+            arr[j + 1] = arr[j];
             j = j - 1;
         }
-        arr[j+1] = key;
+        arr[j + 1] = key;
     }
-    return arr;
+}`
+    },
+    mergeSort: {
+        best: "O(n log n)",
+        average: "O(n log n)",
+        worst: "O(n log n)",
+        cppCode: `
+void merge(int arr[], int l, int m, int r) {
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    int L[n1], R[n2];
+    for (int i = 0; i < n1; i++) L[i] = arr[l + i];
+    for (int j = 0; j < n2; j++) R[j] = arr[m + 1 + j];
+    int i = 0, j = 0, k = l;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) arr[k++] = L[i++];
+        else arr[k++] = R[j++];
+    }
+    while (i < n1) arr[k++] = L[i++];
+    while (j < n2) arr[k++] = R[j++];
 }
 
-function heapSort(arr) {
-    function heapify(arr, n, i) {
-        var largest = i;
-        var l = 2 * i + 1;
-        var r = 2 * i + 2;
-    
-        if (l < n && arr[l] > arr[largest]) {
-            largest = l;
-        }
-    
-        if (r < n && arr[r] > arr[largest]) {
-            largest = r;
-        }
-    
-        if (largest !== i) {
-            var temp = arr[i];
-            arr[i] = arr[largest];
-            arr[largest] = temp;
-    
-            heapify(arr, n, largest);
+void mergeSort(int arr[], int l, int r) {
+    if (l >= r) return;
+    int m = l + (r - l) / 2;
+    mergeSort(arr, l, m);
+    mergeSort(arr, m + 1, r);
+    merge(arr, l, m, r);
+}`
+    },
+    quickSort: {
+        best: "O(n log n)",
+        average: "O(n log n)",
+        worst: "O(n^2)",
+        cppCode: `
+int partition (int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            std::swap(arr[i], arr[j]);
         }
     }
-    
-    var n = arr.length;
-    
-    for (var i = Math.floor(n / 2) - 1; i >= 0; i--) {
-        heapify(arr, n, i);
-    }
-    
-    for (var i = n - 1; i >= 0; i--) {
-        var temp = arr[0];
-        arr[0] = arr[i];
-        arr[i] = temp;
-    
-        heapify(arr, i, 0);
-    }
-    
-    return arr;
+    std::swap(arr[i + 1], arr[high]);
+    return (i + 1);
 }
 
-function mergeSort(arr) {
-    if (arr.length <= 1) {
-        return arr;
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
     }
-    
-    var middle = Math.floor(arr.length / 2);
-    var left = arr.slice(0, middle);
-    var right = arr.slice(middle);
-    
-    return merge(mergeSort(left), mergeSort(right));
+}`
+    }
+};
+
+function displayAlgorithmInfo(algorithm) {
+    document.getElementById('best-case').textContent = algorithmInfo[algorithm].best;
+    document.getElementById('average-case').textContent = algorithmInfo[algorithm].average;
+    document.getElementById('worst-case').textContent = algorithmInfo[algorithm].worst;
+    document.getElementById('cpp-code').textContent = algorithmInfo[algorithm].cppCode;
 }
 
-function merge(left, right) {
-    var result = [];
-    var leftIndex = 0;
-    var rightIndex = 0;
-
-    while (leftIndex < left.length && rightIndex < right.length) {
-        if (left[leftIndex] < right[rightIndex]) {
-            result.push(left[leftIndex]);
-            leftIndex++;
-        } else {
-            result.push(right[rightIndex]);
-            rightIndex++;
-        }
-    }
-
-    return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
-}
-
-function quickSort(arr) {
-    if (arr.length <= 1) {
-        return arr;
-    }
-    
-    var pivot = arr[Math.floor(arr.length / 2)];
-    var left = [];
-    var right = [];
-    var equal = [];
-    
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] < pivot) {
-            left.push(arr[i]);
-        } else if (arr[i] > pivot) {
-            right.push(arr[i]);
-        } else {
-            equal.push(arr[i]);
-        }
-    }
-    
-    return quickSort(left).concat(equal).concat(quickSort(right));
-}
-
-function countingSort(arr) {
-    // Check if the array is empty
-    if (arr.length === 0) {
-        return arr;
-    }
-
-    // Check if the array contains fractional numbers
-    for (var i = 0; i < arr.length; i++) {
-        if (!Number.isInteger(arr[i])) {
-            return "Counting Sort is only for integers. Fractional numbers are not supported.";
-        }
-    }
-
-    // Check if the array contains negative numbers
-    var containsNegative = false;
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] < 0) {
-            containsNegative = true;
+function sort() {
+    const algorithm = document.getElementById('algorithm').value;
+    displayAlgorithmInfo(algorithm);
+    switch (algorithm) {
+        case 'bubbleSort':
+            bubbleSort();
             break;
-        }
-    }
-
-    if (containsNegative) {
-        return countingSortForNegative(arr);
-    } else {
-        return countingSortForNonNegative(arr);
+        case 'selectionSort':
+            selectionSort();
+            break;
+        case 'insertionSort':
+            insertionSort();
+            break;
+        case 'mergeSort':
+            mergeSort(array, 0, array.length - 1);
+            break;
+        case 'quickSort':
+            quickSort(array, 0, array.length - 1);
+            break;
     }
 }
-
-function countingSortForNonNegative(arr) {
-    // Find the maximum value in the array
-    var max = arr[0];
-    for (var i = 1; i < arr.length; i++) {
-        if (arr[i] > max) {
-            max = arr[i];
-        }
-    }
-
-    // Create an array to store the count of each element
-    var countArray = new Array(max + 1).fill(0);
-
-    // Count the occurrences of each element
-    for (var i = 0; i < arr.length; i++) {
-        countArray[arr[i]]++;
-    }
-
-    // Build the sorted array
-    var sortedArray = [];
-    for (var i = 0; i < countArray.length; i++) {
-        while (countArray[i] > 0) {
-            sortedArray.push(i);
-            countArray[i]--;
-        }
-    }
-
-    return sortedArray;
-}
-
-function countingSortForNegative(arr) {
-    // Find the maximum and minimum values in the array
-    var max = Math.max(...arr);
-    var min = Math.min(...arr);
-
-    // Create an array to store the count of each element
-    var countArray = new Array(max - min + 1).fill(0);
-
-    // Count the occurrences of each element
-    for (var i = 0; i < arr.length; i++) {
-        countArray[arr[i] - min]++;
-    }
-
-    // Build the sorted array
-    var sortedArray = [];
-    for (var i = 0; i < countArray.length; i++) {
-        while (countArray[i] > 0) {
-            sortedArray.push(i + min);
-            countArray[i]--;
-        }
-    }
-
-    return sortedArray;
-}
-function radixSort(arr) {
-    // Check if the array is empty
-    if (arr.length === 0) {
-        return arr;
-    }
-
-    // Check if the array contains only non-negative integers
-    for (var i = 0; i < arr.length; i++) {
-        if (!Number.isInteger(arr[i]) || arr[i] < 0) {
-            return "Radix Sort is only for non-negative integers.";
-        }
-    }
-
-    // Find the maximum value in the array
-    var max = Math.max(...arr);
-
-    // Perform counting sort for each digit
-    for (var exp = 1; Math.floor(max / exp) > 0; exp *= 10) {
-        arr = countingSortByDigit(arr, exp);
-    }
-
-    return arr;
-}
-
-function countingSortByDigit(arr, exp) {
-    var countArray = new Array(10).fill(0);
-    var outputArray = new Array(arr.length);
-
-    // Count the occurrences of each digit
-    for (var i = 0; i < arr.length; i++) {
-        var digit = Math.floor(arr[i] / exp) % 10;
-        countArray[digit]++;
-    }
-
-    // Modify the count array to store the cumulative count of each digit
-    for (var i = 1; i < countArray.length; i++) {
-        countArray[i] += countArray[i - 1];
-    }
-
-    // Build the output array using the count array
-    for (var i = arr.length - 1; i >= 0; i--) {
-        var digit = Math.floor(arr[i] / exp) % 10;
-        outputArray[countArray[digit] - 1] = arr[i];
-        countArray[digit]--;
-    }
-
-    // Copy the sorted elements back into the original array
-    for (var i = 0; i < arr.length; i++) {
-        arr[i] = outputArray[i];
-    }
-
-    return arr;
-}
-function bucketSort(arr, bucketSize = 5) {
-    // Check if the array is empty
-    if (arr.length === 0) {
-        return arr;
-    }
-
-    // Check if the array contains only non-negative numbers
-    for (var i = 0; i < arr.length; i++) {
-        if (!Number.isFinite(arr[i]) || arr[i] < 0) {
-            return "Bucket Sort is only for non-negative finite numbers.";
-        }
-    }
-
-    // Find the maximum and minimum values in the array
-    var max = Math.max(...arr);
-    var min = Math.min(...arr);
-
-    // Calculate the number of buckets needed
-    var numBuckets = Math.floor((max - min) / bucketSize) + 1;
-    
-    // Initialize buckets
-    var buckets = new Array(numBuckets);
-    for (var i = 0; i < numBuckets; i++) {
-        buckets[i] = [];
-    }
-
-    // Distribute elements into buckets
-    for (var i = 0; i < arr.length; i++) {
-        var bucketIndex = Math.floor((arr[i] - min) / bucketSize);
-        buckets[bucketIndex].push(arr[i]);
-    }
-
-    // Sort each bucket using another sorting algorithm (e.g., insertion sort)
-    for (var i = 0; i < buckets.length; i++) {
-        buckets[i] = insertionSort(buckets[i]);
-    }
-
-    // Concatenate sorted buckets
-    var sortedArray = [].concat(...buckets);
-
-    return sortedArray;
-}
-
-
+window.onload = generateArray;
 

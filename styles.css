@@ -1,52 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: aquamarine;
+    font-family: 'Poppins', sans-serif;
+    background-color: #2E3B4E;
+    background-image: url("bg.avif");
+    background-size: cover;
+    color: #FAF0CA;
+    overflow-x: hidden;
 }
-.container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-.input-group, .output-group {
-    margin-bottom: 15px;
-}
-.heading{
+
+header {
+    width: 100%;
+    background-color: #1C1F26;
+    padding: 10px 0;
     text-align: center;
+    box-shadow: 0px 0px 15px rgb(15, 139, 180);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
+
+header h1 {
+    margin: 0;
+    color: #F4D35E;
+    font-size: 24px;
 }
-input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+
+.content-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1200px;
 }
-select, button {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    cursor: pointer;
+
+.left-container {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+.right-container {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.controls {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
 button {
-    background-color: #4CAF50;
-    color: white;
+    border-radius: 10px;
+    background-color: #EE964B;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
+
 button:hover {
-    background-color: #45a049;
+    transform: scale(1.05);
+    box-shadow: 1px 1px 10px goldenrod;
+    background-color: #F4A261;
 }
-textarea {
+select {
+    background: #F4D35E;
+    border-radius: 5px;
+    color: black;
+    font-weight: 600;
+    padding: 5px;
+}
+#array-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 335px;
+    width: 600px;
+    background-color: #fff;
+    border: 2px solid #0D3B66;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+/* Bar Styling */
+.bar {
+    display: inline-block;
+    width: 20px;
+    margin: 0 2px;
+    background-color: #0D3B66;
+    position: relative;
+    border-radius: 5px 5px 0 0;
+    transition: background-color 0.3s ease, height 0.3s ease;
+}
+
+.bar-value {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #333;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+#code-snippet {
+    margin-top: 20px;
+    background-color: #2E3B4E;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgb(15, 139, 180);
     width: 100%;
-    height: 200px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#code-snippet h2 {
+    margin-bottom: 10px;
+    color: #F4D35E;
+}
+
+#code-snippet pre {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #FAF0CA;
+}
+
+#complexity {
+    height: 335px;
+    background-color: #1C1F26;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgb(15, 139, 180);
+    color: #FAF0CA;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#complexity h2 {
+    margin-bottom: 10px;
+    color: #F4D35E;
+}
+
+#complexity p {
+    margin: 10px 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #2E3B4E;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgb(15, 139, 180);
+}
+footer {
+    width: 100%;
+    background-color: #1C1F26;
+    padding: 10px 0;
+    text-align: center;
+    box-shadow: 0px 0px 15px rgb(15, 139, 180);
+    color: #F4D35E;
+    margin-top: auto;
 }

@@ -1,41 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sorting Algorithm Visualizer</title>
-<link rel = "stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithm Visualizer</title>
+    <link rel="stylesheet" href="project2.css">
 </head>
-
 <body>
-<div class ="heading">
-    <h1>Sorting Algorithm Visualizer</h1>
-</div>
-<div class="container">
-    <div class="input-group">
-        <label for="numbers">Enter numbers (comma-separated):</label>
-        <input type="text" id="numbers" placeholder="e.g., 5, 2, 8, 1, 9">
+    <header>
+        <h1>Sorting Algo Visualizer</h1>
+    </header>
+
+    <div class="content-container">
+        <div class="left-container">
+            <div class="controls">
+                <button onclick="generateArray()">Generate New Array</button>
+                <select id="algorithm">
+                    <option value="bubbleSort">Bubble Sort</option>
+                    <option value="selectionSort">Selection Sort</option>
+                    <option value="insertionSort">Insertion Sort</option>
+                    <option value="mergeSort">Merge Sort</option>
+                    <option value="quickSort">Quick Sort</option>
+                </select>
+                <button onclick="sort()">Sort</button>
+                <label for="speed">Speed: </label>
+                <input type="range" id="speed" min="1" max="150" value="75" oninput="updateSpeed(this.value)">
+                <span id="speed-value">75</span> ms
+            </div>
+            <div id="array-container"></div>
+            <div id="code-snippet">
+                <h2>C++ Code Snippet</h2>
+                <pre id="cpp-code"></pre>
+            </div>
+        </div>
+        <div class="right-container">
+            <div id="complexity">
+                <h2>Time Complexity</h2>
+                <p><strong>Best Case:</strong> <span id="best-case"></span></p>
+                <p><strong>Average Case:</strong> <span id="average-case"></span></p>
+                <p><strong>Worst Case:</strong> <span id="worst-case"></span></p>
+            </div>
+        </div>
     </div>
-    <div class="input-group">
-        <label for="algorithm">Select sorting algorithm:</label>
-        <select id="algorithm">
-            <option value="bubble">Bubble Sort</option>
-            <option value="selection">Selection Sort</option>
-            <option value="insertion">Insertion Sort</option>
-            <option value="heap">Heap Sort</option>
-            <option value="merge">Merge Sort</option>
-            <option value="quick">Quick Sort</option>
-            <option value="counting">Counting Sort</option>
-            <option value="radix">Radix Sort</option>
-            <option value="bucket">Bucket Sort</option>
-        </select>
-    </div>
-    <button onclick="sort()">Sort</button>
-    <div class="output-group">
-        <label for="output">Sorted Output:</label>
-        <textarea id="output" readonly></textarea>
-    </div>
-</div>
-<script src = "script1.js"></script>
+    <footer>
+        <p>&copy; 2024 Sorting Algorithm Visualizer | Aryan Raj Upadhyay</p>
+    </footer>
+    <script src="project2.js"></script>
 </body>
 </html>
