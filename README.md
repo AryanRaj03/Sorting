@@ -17,4 +17,4 @@ To run the Sorting Visualizer, you only need a modern web browser. No additional
 `cd sorting-visualizer`
 #### **Open index.html:**
 Open the `index.html` file in your preferred web browser.
-### **Made with :heart: by Aryan Raj Upadhyay**
+
