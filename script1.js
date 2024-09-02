@@ -104,7 +104,6 @@ async function insertionSort() {
 }
 
 
-// script.js
 
 async function mergeSort(arr, l, r) {
     if (l >= r) {
@@ -115,7 +114,7 @@ async function mergeSort(arr, l, r) {
     await mergeSort(arr, m + 1, r);
     await merge(arr, l, m, r);
     if (l === 0 && r === arr.length - 1) {
-        // Turn all bars green after sorting is done
+        //  sorting is done
         await turnBarsGreen();
     }
     
