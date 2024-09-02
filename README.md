@@ -3,7 +3,9 @@
 This project is a comprehensive web-based tool designed to visualize and analyze various sorting algorithms. The visualizer aims to facilitate a deeper understanding of sorting algorithms through interactive, real-time graphical representations. It is particularly useful for students, educators, and professionals seeking to explore algorithmic behavior in an intuitive manner.
 
 ## Project Overview
+## Screenshots
 
+![Screenshot](screenshot.png)
 ### Key Features
 
 - **Algorithm Visualization:**
